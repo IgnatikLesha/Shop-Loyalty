@@ -1,0 +1,78 @@
+﻿@model TasksManager.Models.ProductViewModel
+@{
+    ViewBag.Title = "Create sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class=" col-md-7 ">
+        <div class="panel">
+            <div class="panel-heading text-center ">
+                <h3>Creating new sale</h3>
+            </div>
+            <div class="panel-body">
+                @{
+                    int n = ViewBag.AllUsers.Count;
+                    string[] allUsers = new string[n];
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (ViewBag.AllUsers[i].Name != User.Identity.Name)
+                        { allUsers[i] = ViewBag.AllUsers[i].Name; }
+                    }
+
+}
+
+                @using (Html.BeginForm("CreateProduct", "Home", FormMethod.Post))
+                {
+
+
+                    <fieldset>
+                        @*<legend>Creating new Product</legend>*@
+                        <div class="btn-group open" id="form-id">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter name of the product" })
+                        </div>
+
+                        <div class="btn-group open">
+                            @Html.LabelFor(m => m.Description)
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter the description" })
+                        </div>
+
+                        <div class="btn-group open">
+                            @Html.LabelFor(m => m.Price)
+                            @Html.TextAreaFor(m => m.Price, new { @class = "form-control", @placeholder = "Enter Price of the product" })
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Create</button>
+                            </div>
+                            <div class="col-md-6">
+
+                                <button type="reset" class="btn btn-info btn-lg btn-block">Cancel</button>
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                }
+            </div>
+
+        </div>
+    </div>
+                    }
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate.bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.min.js"></script>
+}

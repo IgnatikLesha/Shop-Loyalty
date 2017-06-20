@@ -1,0 +1,47 @@
+﻿@using ORM
+@model TasksManager.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new Dictionary<string, object> { { "data-toggle", "validator" } }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter login" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter Email" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter password", @type = "password" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PasswordConfirm)
+                @Html.TextBoxFor(m => m.PasswordConfirm, new {@class = "form-control", @placeholder = "Confirm password", @type = "password"})
+                @Html.ValidationMessageFor(m => m.PasswordConfirm)
+            </div>
+
+                <div class="bs-component">
+                        @*<button type="submit" class="btn btn-success btn-lg btn-block">Sign Up</button>*@
+                        <button type="submit" class="btn btn-success">Sign Up</button>
+
+                        <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+        </fieldset>
+    }
+
+
+
+
+

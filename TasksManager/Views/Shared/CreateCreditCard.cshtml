@@ -1,0 +1,66 @@
+﻿@model TasksManager.Models.CreditCardViewModel
+@{
+    ViewBag.Title = "Create sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class=" col-md-7 ">
+        <div class="panel">
+            <div class="panel-heading text-center ">
+                <h3>Binding credit card to your account</h3>
+            </div>
+            <div class="panel-body">
+                
+
+}
+
+                @using (Html.BeginForm("CreateCreditCard", "Home", FormMethod.Post))
+                {
+
+
+                    <fieldset>
+                        @*<legend>Creating new Product</legend>*@
+                        <div class="btn-group open" id="form-id">
+                            @Html.LabelFor(m => m.Number)
+                            @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @placeholder = "Enter number" })
+                        </div>
+
+                        <div class="btn-group open">
+                            @Html.LabelFor(m => m.Amount)
+                            @Html.TextAreaFor(m => m.Amount, new { @class = "form-control", @placeholder = "Enter start amount of your credit card" })
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Create</button>
+                            </div>
+                            <div class="col-md-6">
+
+                                <button type="reset" class="btn btn-info btn-lg btn-block">Cancel</button>
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                }
+            </div>
+
+        </div>
+    </div>
+                    }
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate.bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.min.js"></script>
+}

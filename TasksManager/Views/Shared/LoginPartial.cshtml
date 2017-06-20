@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <span class="right_ab">
+            @Html.ActionLink("Hello, " + User.Identity.Name + "!", "Index", "Home" )
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out">Log off</a>
+        </span>
+    }
+}
+else
+{
+    <span class="right_ab">
+        @*<ul class="nav navbar-nav navbar-right">*@
+        @*@Html.ActionLink("Login in", "Login", "Account")
+        @Html.ActionLink("Sign up", "Register", "Account")*@
+        <a class="glyphicon glyphicon-log-in" href="http://localhost:5100/Account/Login/">  Log in</a>
+        <a class="glyphicon glyphicon-registration-mark" href="http://localhost:5100/Account/Register/"> Sing up</a>
+
+        @*<li @*class="">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "glyphicon glyphicon-registration-mark" })</li>
+            <li @*class="glyphicon glyphicon-log-in">@Html.ActionLink("Sing up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "glyphicon glyphicon-log-in" })</li>*@
+
+        @*</ul>*@
+    </span>
+}
+
+

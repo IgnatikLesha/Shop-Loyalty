@@ -1,0 +1,86 @@
+﻿@model IEnumerable<TasksManager.Models.SaleViewModel>
+@{
+    ViewBag.Title = "My tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var options = new AjaxOptions
+    {
+        UpdateTargetId = "main",
+    };
+ }
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <h2> All Sales</h2>
+
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>
+                    <p class="text-info">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </p>
+                </th>
+                <th>
+                    <p class="text-info">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </p>
+                </th>
+                <th>
+                    <p class="text-info">
+                        @Html.DisplayNameFor(model => model.Price)
+                    </p>
+                </th>
+                <th>
+                    <p class="text-info">
+                        @Html.DisplayNameFor(model => model.IsConfirmed)
+                    </p>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p class="text-success">
+                        @item.Name
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success">
+                        @item.Description
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success">
+                        @item.Price
+                    </p>
+                </td>
+               
+                <td>
+                    @if (item.IsConfirmed == false)
+                    {
+                        <label>Not Confirmed</label>
+                    }
+                    else
+                    {
+
+
+                        using (Ajax.BeginForm("SetConfirmed", "Home", new
+                        {
+                            saleId = item.Id, price = item.Price, shopId = item.ShopId,
+                            buyerId = item.BuyerId, discount = item.Discount
+                        }, options))
+                        {
+                             <input type="submit" value="Confirm" class="btn btn-success"/>
+                         }
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

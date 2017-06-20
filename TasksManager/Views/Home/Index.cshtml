@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<TasksManager.Models.SaleViewModel>
+@using PagedList.Mvc
+
+
+@{
+    ViewBag.Title = "All tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    //@Html.ActionLink("Show My Sales", "ShowMySales", "Home")
+    //@Html.ActionLink("Json", "ShowMySalesJson", "Home")
+    <a href="http://localhost:5100/Home/ShowAllSales/"><img src="/Content/images/mytasks.jpg" width="400" 
+  height="400" alt="My tasks"/></a>
+    <a href="http://localhost:5100/Home/ShowMySales" ><img src="/Content/images/mt.png" width="400" 
+  height="400" alt="Created tasks"/></a>
+}
+else
+{
+    <h2> All Sales</h2>
+
+    <table>
+        <tr>
+            <th>
+                <p class="text-info">
+                    Name
+                </p>
+            </th>
+            <th>
+                <p class="text-info">
+                    Description
+                </p>
+            </th>
+            <th>
+                <p class="text-info">
+                    Checked
+                </p>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p class="text-success">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                </td>
+                @if (item.IsConfirmed == true)
+                {
+                    <td>
+                        <p class="text-success">Confirmed</p></td>
+                }
+                else
+                {
+                    <td>
+                        <p class="text-success">Not confirmed</p></td>
+                }
+
+            </tr>
+        }
+    </table>
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+}

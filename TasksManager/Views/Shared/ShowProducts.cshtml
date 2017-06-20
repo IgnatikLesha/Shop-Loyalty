@@ -1,0 +1,72 @@
+﻿@model IEnumerable<TasksManager.Models.ProductViewModel>
+@{
+    ViewBag.Title = "All products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> All Sales</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            Buy
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                <td>
+                    @using (Ajax.BeginForm("CreateSale", "Home", new
+                    {
+                        name = item.Name, description = item.Description,
+                        user = User.Identity.Name, shopId = item.ShopId, price = item.Price, discount = false
+                    }, new AjaxOptions {UpdateTargetId = "main",}))
+                    {
+                        <input type="submit" value="Buy" class="btn btn-success"/>
+                    }
+                </td>
+                if (ViewBag.Discount)
+                {
+                    <td>
+                        @using (Ajax.BeginForm("CreateDiscountSale", "Home", new
+                        {
+                            name = item.Name,
+                            description = item.Description,
+                            user = User.Identity.Name,
+                            shopId = item.ShopId,
+                            price = item.Price,
+                            discount = true
+                        }, new AjaxOptions { UpdateTargetId = "main", }))
+                        {
+                            <input type="submit" value="Buy" class="btn btn-success" />
+                        }
+                    </td>
+                }
+            }
+        </tr>
+    }
+
+
+</table>
